@@ -2,8 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
 import User from './components/User.vue'
-import Restaurant from './components/Restaurant.vue';
-import Restaurants from './components/Restaurants.vue';
+import Restaurant from './components/Restaurant.vue'
+import Restaurants from './components/Restaurants.vue'
+import Commandes from './components/Commandes.vue'
 
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
@@ -15,7 +16,9 @@ Vue.use(VueRouter);
 const routes = [
     {path:'/', component: Restaurants},
     {path:'/restaurants', component: Restaurants},
-    {path:'/restaurant/:id', component: Restaurant, props: true}
+    {path:'/restaurant/:id', component: Restaurant, props: true},
+    {path:'/user', component: User},
+    {path:'/commandes', component: Commandes}
 ]
 
 const router = new VueRouter({

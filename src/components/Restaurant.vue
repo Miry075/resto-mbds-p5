@@ -10,12 +10,52 @@
     </v-layout>
     <v-layout row wrap class="ma-2">
       <v-flex xs12>
-      <h2>Carte & Menu</h2>
+        <h2>Carte</h2>
       </v-flex>
     </v-layout>
+
     <v-layout row wrap>
-      <v-flex v-for="i in 6" :key="`6${i}`" xs4>
-        <v-card>
+      <v-flex xs4>
+        <v-card style="cursor: pointer">
+          <v-img :src="require('../assets/hors-d-oeuvres.jpg')" aspect-ratio="1.7"></v-img>
+          <v-card-title primary-title>
+            <div>
+              <h3>Hors d'oeuvres</h3>
+            </div>
+          </v-card-title>
+        </v-card>
+      </v-flex>
+      <v-flex xs4>
+        <v-card style="cursor: pointer">
+          <v-img :src="require('../assets/plats.jpg')" aspect-ratio="1.7"></v-img>
+          <v-card-title primary-title>
+            <div>
+              <h3>Plats</h3>
+            </div>
+          </v-card-title>
+        </v-card>
+      </v-flex>
+      <v-flex xs4>
+        <v-card style="cursor: pointer">
+          <v-img :src="require('../assets/dessert.jpg')" aspect-ratio="1.7"></v-img>
+          <v-card-title primary-title>
+            <div>
+              <h3>Desserts</h3>
+            </div>
+          </v-card-title>
+        </v-card>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row wrap class="ma-2">
+      <v-flex xs12>
+        <h2>Menus</h2>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row wrap>
+      <v-flex v-for="i in 3" :key="`6${i}`" xs4>
+        <v-card style="cursor: pointer">
           <v-img :src="require('../assets/mugg-and-bean.jpg')" aspect-ratio="1.7"></v-img>
           <v-card-title primary-title>
             <div>
@@ -23,22 +63,6 @@
               <div>Rs 650</div>
             </div>
           </v-card-title>
-          <v-card-text>
-            <div>
-              <p>
-                 avocats mayonnaise
-                 <br>
-                 tomates en salade
-                 <br>
-                 entrecote de boeuf sauce au poivre
-                 <br>
-                 tarte au citron
-              </p>
-            </div>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn flat color="orange">Commander</v-btn>
-          </v-card-actions>
         </v-card>
       </v-flex>
     </v-layout>
@@ -55,7 +79,7 @@ export default {
   props: ["id"],
   data() {
     return {
-      restaurant: { nom: "test", cuisine: "test" }
+      restaurant: { nom: "", cuisine: "" }
     };
   },
   mounted() {

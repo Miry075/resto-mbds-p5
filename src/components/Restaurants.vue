@@ -18,7 +18,7 @@
     </v-layout>
     <v-layout row wrap>
       <v-flex v-for="r in restaurants" xs4>
-        <v-card>
+        <v-card style="cursor: pointer" @click="details(r.id)">
           <v-img :src="require('../assets/mugg-and-bean.jpg')" aspect-ratio="1.7"></v-img>
           <v-card-title primary-title>
             <div>
@@ -63,6 +63,9 @@ export default {
   methods: {
     details: function(id) {
       this.$router.push({ path: `/restaurant/${id}` });
+    },
+    test: function() {
+      alert("test");
     }
     /*supprimerRestaurant: function(r) {
       console.log(r[".key"]);

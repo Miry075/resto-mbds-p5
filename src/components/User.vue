@@ -17,7 +17,4 @@ export default {
 </script>
 
 <style>
-p{
-    border : 2px dashed red;
-}
 </style>

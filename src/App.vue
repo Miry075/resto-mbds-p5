@@ -1,5 +1,20 @@
 <template>
   <v-app class="ma-0">
+    <v-toolbar fixed>
+      <v-toolbar-title ><span  @click="navigate('restaurants')" style="cursor: pointer">Resto</span></v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <v-btn flat  @click="navigate('user')">Profil</v-btn>
+        <v-btn flat >Deconnexion</v-btn>
+        <!-- <v-btn flat>Link Two</v-btn> -->
+        <v-btn light icon @click="navigate('commandes')">
+          <v-badge top color="orange">
+            <span slot="badge">9</span>
+            <v-icon>shopping_cart</v-icon>
+          </v-badge>
+        </v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
     <v-content>
       <img src="./assets/banner.jpg">
       <router-view/>
@@ -21,7 +36,12 @@ export default {
   name: "app",
   data: () => ({
     links: ["Accueil", "A propos", "Equipe", "Services", "Contactez-nous"]
-  })
+  }),
+  methods: {
+    navigate: function(page) {
+      this.$router.push({ path: `/`+page });
+    }
+  }
 };
 </script>
 
