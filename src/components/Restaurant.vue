@@ -2,45 +2,30 @@
 <template>
   <v-container grid-list-md text-xs-center>
     <v-layout row wrap>
-      <v-flex xs12>
+      <v-flex xs5>
         <h1>{{restaurant.nom}}</h1>
         <span class="grey--text">Cuisine {{restaurant.cuisine}}</span>
-        <p>Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages.</p>
+        <p>{{restaurant.description}}</p>
+      </v-flex>
+      <v-flex xs7>
+        <v-img :src="restaurant.photo" aspect-ratio="1.8"></v-img>
       </v-flex>
     </v-layout>
+
     <v-layout row wrap class="ma-2">
       <v-flex xs12>
-        <h2>Carte</h2>
+        <h1>Menus</h1>
       </v-flex>
     </v-layout>
 
     <v-layout row wrap>
-      <v-flex xs4>
+      <v-flex v-for="menu in menus" xs4>
         <v-card style="cursor: pointer">
-          <v-img :src="require('../assets/hors-d-oeuvres.jpg')" aspect-ratio="1.7"></v-img>
+          <v-img :src="menu.photo" aspect-ratio="1.7"></v-img>
           <v-card-title primary-title>
             <div>
-              <h3>Hors d'oeuvres</h3>
-            </div>
-          </v-card-title>
-        </v-card>
-      </v-flex>
-      <v-flex xs4>
-        <v-card style="cursor: pointer">
-          <v-img :src="require('../assets/plats.jpg')" aspect-ratio="1.7"></v-img>
-          <v-card-title primary-title>
-            <div>
-              <h3>Plats</h3>
-            </div>
-          </v-card-title>
-        </v-card>
-      </v-flex>
-      <v-flex xs4>
-        <v-card style="cursor: pointer">
-          <v-img :src="require('../assets/dessert.jpg')" aspect-ratio="1.7"></v-img>
-          <v-card-title primary-title>
-            <div>
-              <h3>Desserts</h3>
+              <h3>{{menu.nom}}</h3>
+              <div>Rs {{menu.prix}}</div>
             </div>
           </v-card-title>
         </v-card>
@@ -49,20 +34,48 @@
 
     <v-layout row wrap class="ma-2">
       <v-flex xs12>
-        <h2>Menus</h2>
+        <h1>Carte</h1>
       </v-flex>
     </v-layout>
 
     <v-layout row wrap>
-      <v-flex v-for="i in 3" :key="`6${i}`" xs4>
-        <v-card style="cursor: pointer">
-          <v-img :src="require('../assets/mugg-and-bean.jpg')" aspect-ratio="1.7"></v-img>
+      <v-flex xs4>
+        <v-text-field label="Nom" v-model="nom"></v-text-field>
+      </v-flex>
+      <v-flex xs4>
+        <v-select :items="items" label="Type" v-model="type" clearable></v-select>
+      </v-flex>
+      <v-flex xs4>
+        <v-layout row wrap>
+          <v-flex xs8>
+            <v-range-slider label="Prix" v-model="price" :max="3000" :min="50" :step="10"></v-range-slider>
+          </v-flex>
+          <v-flex xs2>
+            <v-text-field v-model="price[0]" class="mt-0" hide-details single-line type="number"></v-text-field>
+          </v-flex>
+          <v-flex xs2>
+            <v-text-field v-model="price[1]" class="mt-0" hide-details single-line type="number"></v-text-field>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row wrap>
+      <v-flex v-for="plat in filteredList" xs4>
+        <v-card>
+          <v-img :src="plat.photo" aspect-ratio="1.7"></v-img>
           <v-card-title primary-title>
             <div>
-              <h3>Menu surprise</h3>
-              <div>Rs 650</div>
+              <h3>{{plat.nom}}</h3>
+              <span class="grey--text">{{plat.type}}</span>
+              <br>
+              <div>Rs {{plat.prix}}</div>
+              <span>{{plat.description}}</span>
             </div>
           </v-card-title>
+          <v-card-actions>
+            <v-btn flat color="orange">Commander</v-btn>
+          </v-card-actions>
         </v-card>
       </v-flex>
     </v-layout>
@@ -73,23 +86,88 @@
 import { db } from "../Firebase";
 
 var restaurantsRef = db.ref("restaurant");
+var cuisinesRef = db.ref("cuisine");
+var menuRef = db.ref("menu");
+var platRef = db.ref("plat");
 
 export default {
   name: "restaurant",
   props: ["id"],
+
   data() {
     return {
-      restaurant: { nom: "", cuisine: "" }
+      restaurant: { nom: "", cuisine: "", photo: "", description: "" },
+      menus: [],
+      plats: [],
+      price: [50, 1000],
+      nom: "",
+      type: "",
+      items: ["Hors d'oeuvres", "Plat", "Dessert"]
     };
   },
+
   mounted() {
     restaurantsRef
       .orderByChild("id")
       .equalTo(this.id)
       .on("child_added", snapshot => {
         this.restaurant.nom = snapshot.child("nom").val();
-        this.restaurant.cuisine = snapshot.child("cuisine").val();
+        this.restaurant.photo = require("../assets/restaurants/" +
+          snapshot.child("photo").val());
+        this.restaurant.description =
+          "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages.";
+
+        cuisinesRef
+          .orderByKey()
+          .equalTo(snapshot.child("cuisine").val())
+          .on("child_added", snapshot2 => {
+            this.restaurant.cuisine = snapshot2.child("nom").val();
+          });
+
+        menuRef
+          .orderByChild("restaurant")
+          .equalTo(snapshot.key)
+          .on("child_added", snapshot => {
+            this.menus.push({
+              nom: snapshot.child("nom").val(),
+              prix: snapshot.child("prix").val(),
+              photo: require("../assets/menu/" + snapshot.child("photo").val())
+            });
+          });
+
+        platRef
+          .orderByChild("restaurant")
+          .equalTo(snapshot.key)
+          .on("child_added", snapshot => {
+            this.plats.push({
+              nom: snapshot.child("nom").val(),
+              prix: snapshot.child("prix").val(),
+              type: snapshot.child("type").val(),
+              description: snapshot.child("description").val(),
+              photo: require("../images/plats/" + snapshot.child("photo").val())
+            });
+          });
       });
-  }
+  },
+  computed: {
+    filteredList() {
+      return this.plats.filter(plat => {
+        if (this.type != undefined) {
+          return (
+            plat.nom.toLowerCase().includes(this.nom.toLowerCase()) &&
+            plat.type.toLowerCase().includes(this.type.toLowerCase()) &&
+            plat.prix >= this.price[0] &&
+            plat.prix <= this.price[1]
+          );
+        }
+        return (
+          plat.nom.toLowerCase().includes(this.nom.toLowerCase()) &&
+          plat.prix >= this.price[0] &&
+          plat.prix <= this.price[1]
+        );
+      });
+    }
+  },
+  methods: {}
 };
 </script>
