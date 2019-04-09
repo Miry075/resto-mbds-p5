@@ -8,16 +8,11 @@
         <v-text-field v-model="nom" label="Nom" required></v-text-field>
       </v-flex>
       <v-flex xs5>
-        <v-select :items="items" label="Cuisine"></v-select>
-      </v-flex>
-      <v-flex xs2>
-        <v-btn color="primary">
-          <v-icon>search</v-icon>
-        </v-btn>
+        <v-select :items="items" v-model="cuisine" label="Cuisine" clearable></v-select>
       </v-flex>
     </v-layout>
     <v-layout row wrap>
-      <v-flex v-for="r in restaurants" xs4>
+      <v-flex v-for="r in filteredList" xs4>
         <v-card style="cursor: pointer" @click="details(r.id)">
           <v-img :src="require('../assets/mugg-and-bean.jpg')" aspect-ratio="1.7"></v-img>
           <v-card-title primary-title>
@@ -39,6 +34,7 @@
 import { db } from "../Firebase";
 
 var restaurantsRef = db.ref("restaurant");
+var cuisinesRef = db.ref("cuisine");
 
 export default {
   name: "restaurants",
@@ -46,7 +42,8 @@ export default {
     return {
       restaurants: [],
       nom: "",
-      items: ["Chinoise", "Creole", "Americaine", "Francaise"]
+      cuisine: "",
+      items: []
     };
   },
   mounted() {
@@ -59,13 +56,30 @@ export default {
         });
       });
     });
+    cuisinesRef.once("value", cuisines => {
+      cuisines.forEach(cuisine => {
+        this.items.push(cuisine.child("nom").val());
+      });
+    });
+  },
+  computed: {
+    filteredList() {
+      return this.restaurants.filter(restaurant => {
+          if (this.cuisine != undefined) {
+          return (
+            restaurant.nom.toLowerCase().includes(this.nom.toLowerCase()) &&
+            restaurant.cuisine
+              .toLowerCase()
+              .includes(this.cuisine.toLowerCase())
+          );
+        }
+        return restaurant.nom.toLowerCase().includes(this.nom.toLowerCase());
+      });
+    }
   },
   methods: {
     details: function(id) {
       this.$router.push({ path: `/restaurant/${id}` });
-    },
-    test: function() {
-      alert("test");
     }
     /*supprimerRestaurant: function(r) {
       console.log(r[".key"]);
@@ -88,3 +102,4 @@ export default {
   }
 };
 </script>
+
