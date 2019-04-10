@@ -12,7 +12,7 @@
       </v-flex>
     </v-layout>
     <v-layout row wrap>
-      <v-flex v-for="r in filteredList" xs4>
+      <v-flex v-for="(r,index) in filteredList" :key="index" xs4>
         <v-card style="cursor: pointer" @click="details(r.id)">
           <v-img :src="r.photo" aspect-ratio="1.7"></v-img>
           <v-card-title primary-title>
@@ -21,9 +21,6 @@
               <div>{{r.cuisine}}</div>
             </div>
           </v-card-title>
-          <v-card-actions>
-            <v-btn @click="details(r.id)" flat color="orange">Details</v-btn>
-          </v-card-actions>
         </v-card>
       </v-flex>
     </v-layout>
@@ -36,6 +33,7 @@ import { db } from "../Firebase";
 var restaurantsRef = db.ref("restaurant");
 var cuisinesRef = db.ref("cuisine");
 var platsRef = db.ref("plat");
+var menuRef = db.ref("menu");
 
 export default {
   name: "restaurants",
@@ -48,13 +46,17 @@ export default {
     };
   },
   mounted() {
-    /*platsRef.push({
-      nom: "Bouchées de poulet BBQ au bacon",
-    type:"Hors d'oeuvres",
-    description:"Ces bouchées sont composées de poitrines de poulet marinées coupées en cubes et enroulées de bacon.",
-    prix:"300",
-    photo:"Bouchees-de-poulet-BBQ-au-bacon.jpg"
-    });
+  /*  menuRef.push({
+      id: "menu_4",
+      nom: "Menu pour trois",
+      prix: "475",
+      photo: "mugg-and-bean.jpg",
+      plats: [
+        "-Lc1lxbjgAzdH1Caf0Ei",
+        "-Lc1lxbq8VzCLrVTjXCj",
+        "-Lc1lxbsPLKXMxkqL1EV"
+      ]
+    }); 
     platsRef.push({
       nom: "Pétoncle sur chorizo",
     type:"Hors d'oeuvres",
@@ -79,22 +81,20 @@ export default {
 
     restaurantsRef.once("value", restaurants => {
       restaurants.forEach(restaurant => {
-        let cuisine = { nom: "" };
         cuisinesRef
           .orderByKey()
           .equalTo(restaurant.child("cuisine").val())
           .on("child_added", snapshot => {
-            cuisine.nom = snapshot.child("nom").val();
+            this.restaurants.push({
+              id: restaurant.child("id").val(),
+              nom: restaurant.child("nom").val(),
+              cuisine: snapshot.child("nom").val(),
+              photo: require("../assets/restaurants/" +
+                restaurant.child("photo").val()),
+              description:
+                "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages."
+            });
           });
-        this.restaurants.push({
-          id: restaurant.child("id").val(),
-          nom: restaurant.child("nom").val(),
-          cuisine: cuisine.nom,
-          photo: require("../assets/restaurants/" +
-            restaurant.child("photo").val()),
-          description:
-            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages."
-        });
       });
     });
     cuisinesRef.once("value", cuisines => {

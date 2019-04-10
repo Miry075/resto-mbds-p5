@@ -12,15 +12,15 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap class="ma-2">
+    <v-layout row wrap class="mt-5">
       <v-flex xs12>
         <h1>Menus</h1>
       </v-flex>
     </v-layout>
 
     <v-layout row wrap>
-      <v-flex v-for="menu in menus" xs4>
-        <v-card style="cursor: pointer">
+      <v-flex v-for="(menu,index) in menus" :key="index" xs4>
+        <v-card style="cursor: pointer" @click="details(menu.id)">
           <v-img :src="menu.photo" aspect-ratio="1.7"></v-img>
           <v-card-title primary-title>
             <div>
@@ -32,7 +32,7 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap class="ma-2">
+    <v-layout row wrap class="mt-5">
       <v-flex xs12>
         <h1>Carte</h1>
       </v-flex>
@@ -61,7 +61,7 @@
     </v-layout>
 
     <v-layout row wrap>
-      <v-flex v-for="plat in filteredList" xs4>
+      <v-flex v-for="(plat,index) in filteredList" :key="index" xs4>
         <v-card>
           <v-img :src="plat.photo" aspect-ratio="1.7"></v-img>
           <v-card-title primary-title>
@@ -70,13 +70,26 @@
               <span class="grey--text">{{plat.type}}</span>
               <br>
               <div>Rs {{plat.prix}}</div>
-              <span>{{plat.description}}</span>
             </div>
           </v-card-title>
           <v-card-actions>
             <v-btn flat color="orange">Commander</v-btn>
+            <v-btn flat @click="openDialog(index)" color="orange">Details</v-btn>
           </v-card-actions>
         </v-card>
+        <v-dialog v-model="dialog" max-width="290">
+          <v-card>
+            <v-card-title class="headline">{{platDialog.nom}}</v-card-title>
+
+            <v-card-text>{{platDialog.description}}</v-card-text>
+            <div>Rs {{platDialog.prix}}</div>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="orange darken-1" flat="flat" @click="dialog = false">Commander</v-btn>
+              <v-btn color="orange darken-1" flat="flat" @click="dialog = false">Fermer</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-flex>
     </v-layout>
   </v-container>
@@ -102,7 +115,9 @@ export default {
       price: [50, 1000],
       nom: "",
       type: "",
-      items: ["Hors d'oeuvres", "Plat", "Dessert"]
+      items: ["Hors d'oeuvres", "Plat", "Dessert"],
+      dialog: false,
+      platDialog: ""
     };
   },
 
@@ -129,6 +144,7 @@ export default {
           .equalTo(snapshot.key)
           .on("child_added", snapshot => {
             this.menus.push({
+              id: snapshot.child("id").val(),
               nom: snapshot.child("nom").val(),
               prix: snapshot.child("prix").val(),
               photo: require("../assets/menu/" + snapshot.child("photo").val())
@@ -168,6 +184,15 @@ export default {
       });
     }
   },
-  methods: {}
+  methods: {
+    openDialog(index) {
+      this.dialog = true;
+      this.platDialog = this.plats[index];
+      console.log(this.plats[index].nom);
+    },
+    details: function(id) {
+      this.$router.push({ path: `/menu/${id}` });
+    }
+  }
 };
 </script>
