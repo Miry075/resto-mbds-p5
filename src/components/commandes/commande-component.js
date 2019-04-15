@@ -3,7 +3,7 @@ import Component from 'vue-class-component';
 
 import ListPlat from './list-plat/ListPlat.vue'
 import ListOrder from './list-order/ListOrder.vue'
-import RestaurantSlider from '../restaurants/resto-slider/RestaurantSlider.vue';
+// import RestaurantSlider from '../restaurants/resto-slider/RestaurantSlider.vue';
 import LoginSubscribe from '../login-subscribe/LoginSubscribe.vue'
 import RestaurantAutocomplete from "../restaurants/resto-autocomplete/RestaurantAutocomplete.vue";
 
@@ -73,7 +73,7 @@ export default {
     components: {
         ListPlat,
         ListOrder,
-        RestaurantSlider,
+        // RestaurantSlider,
         LoginSubscribe,
         RestaurantAutocomplete
     },

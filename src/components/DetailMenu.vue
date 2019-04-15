@@ -73,8 +73,7 @@ export default {
       .on("child_added", snapshot => {
         this.menu.nom = snapshot.child("nom").val();
         this.menu.prix = snapshot.child("prix").val();
-        this.menu.photo = require("../assets/menu/" +
-          snapshot.child("photo").val());
+        this.menu.photo = ''//require("../assets/menu/" + napshot.child("photo").val());
         /* let platsKeys = snapshot.child("plats").val();
         console.log(platsKeys);
          for (let index = 0; index < platsKeys.length; index++) {

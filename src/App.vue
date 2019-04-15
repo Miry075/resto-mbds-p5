@@ -1,34 +1,5 @@
 <template>
-  <v-app class="ma-0">
-    <v-toolbar fixed>
-      <v-toolbar-title ><span  @click="navigate('restaurants')" style="cursor: pointer">Resto</span></v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <v-btn flat  @click="navigate('user')">Profil</v-btn>
-        <v-btn flat >Deconnexion</v-btn>
-        <!-- <v-btn flat>Link Two</v-btn> -->
-        <v-btn light icon @click="navigate('commandes')">
-          <v-badge top color="orange">
-            <span slot="badge">9</span>
-            <v-icon>shopping_cart</v-icon>
-          </v-badge>
-        </v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
-    <v-content>
-      <img src="./assets/banner.jpg">
-      <router-view/>
-    </v-content>
-    <v-footer height="auto" color="orange lighten-2">
-      <v-layout justify-center row wrap>
-        <v-btn v-for="link in links" :key="link" color="white" flat round>{{ link }}</v-btn>
-        <v-flex orange lighten-3 py-3 text-xs-center white--text xs12>
-          &copy;2019 —
-          <strong>Restaurant</strong>
-        </v-flex>
-      </v-layout>
-    </v-footer>
-  </v-app>
+    <router-view></router-view>
 </template>
 
 <script>
@@ -47,6 +18,7 @@ export default {
 
 <style>
 #app {
+    /* background-image: url('./assets/background.jpeg/'); */
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -6,6 +6,7 @@ import Restaurant from './components/Restaurant.vue'
 import Restaurants from './components/Restaurants.vue'
 import Commandes from './components/Commandes.vue'
 import Menu from './components/DetailMenu.vue'
+import routes from './routes/routes';
 
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
@@ -14,14 +15,14 @@ import 'vuetify/dist/vuetify.min.css';
 Vue.use(Vuetify);
 Vue.use(VueRouter);
 
-const routes = [
-    {path:'/', component: Restaurants},
-    {path:'/restaurants', component: Restaurants},
-    {path:'/restaurant/:id', component: Restaurant, props: true},
-    {path:'/menu/:id', component: Menu, props: true},
-    {path:'/user', component: User},
-    {path:'/commandes', component: Commandes}
-]
+// const routes = [
+//     {path:'/', component: Restaurants},
+//     {path:'/restaurants', component: Restaurants},
+//     {path:'/restaurant/:id', component: Restaurant, props: true},
+//     {path:'/menu/:id', component: Menu, props: true},
+//     {path:'/user', component: User},
+//     {path:'/commandes', component: Commandes}
+// ]
 
 const router = new VueRouter({
     routes: routes,

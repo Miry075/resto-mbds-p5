@@ -3,7 +3,7 @@
        <v-layout row wrap>
             <v-flex md12>
                 <h2>Nos restaurants</h2>
-                <RestaurantSlider></RestaurantSlider>
+                <!-- <RestaurantSlider></RestaurantSlider> -->
             </v-flex>
        </v-layout>
        

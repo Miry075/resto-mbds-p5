@@ -85,7 +85,7 @@ export default {
         {
             icon: "home",
             text: "Nos Restaurants",
-            route: "/restaurants"
+            route: "/restaurants-list"
         },
         {
             icon: "description",
