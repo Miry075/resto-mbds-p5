@@ -1,6 +1,6 @@
 <template>
     <v-content id="content-buffa">
-        <v-content grid-list-md text-xs-center>
+        <v-content grid-list-md text-xs-center id="content-header">
             <Header></Header>
         </v-content>
         <v-container id="container-buffa" grid-list-md fluid text-xs-center>
@@ -9,7 +9,7 @@
     </v-content>
 </template>
 <style lang="css">
-    #content-buffa{
+    #content-buffa, #content-header {
         padding: 0px 0px 0px!important;
     }
     .theme--light.v-table {

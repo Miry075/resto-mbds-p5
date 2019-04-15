@@ -1,48 +1,42 @@
 <template>
-    <router-view></router-view>
+    <div id="app" class="h-100">
+        <router-view></router-view>
+    </div>
 </template>
 
 <script>
-export default {
-  name: "app",
-  data: () => ({
-    links: ["Accueil", "A propos", "Equipe", "Services", "Contactez-nous"]
-  }),
-  methods: {
-    navigate: function(page) {
-      this.$router.push({ path: `/`+page });
-    }
-  }
-};
+export default {};
 </script>
-
 <style>
-#app {
-    /* background-image: url('./assets/background.jpeg/'); */
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+
+html {
+    height: 100%;
+}
+
+html, body {
+    min-height: 100% !important;
+    height: 100%;
+}
+#app{
+    /* background-image: url('../../assets/background-1.jpg'); */
+    background-image: url(https://www.ordermanzer.mu/modules/cms/images/1-about-bg.jpg);
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+    /* position: relative; */
 }
 
-h1,
-h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
+*,
+:before,
+:after {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
 }
 </style>
+

@@ -3,7 +3,6 @@
         <v-toolbar
             app
             flat
-            
             >
             <v-toolbar-side-icon
             class="hidden-md-and-up"
@@ -13,7 +12,7 @@
             py-0
             id="header-toolbar"
             >
-            <v-layout>
+            <v-layout id="layout-header">
                 <v-img
                 :src="require('../../assets/logo.png')"
                 class="mr-5"
