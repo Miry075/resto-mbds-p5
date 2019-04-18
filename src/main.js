@@ -13,6 +13,12 @@ import routes from './routes/routes';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 
+import Carousel3d from 'vue-carousel-3d';
+
+// import 'swiper/dist/css/swiper.css'
+
+Vue.use(Carousel3d)
+
 // import VueGlide from 'vue-glide-js'
 
 // Définition des routes

@@ -1,5 +1,5 @@
 <template>
-    <v-dialog id="login-subscribe" v-model="dialog[0]" persistent max-width="940px">
+    <v-dialog id="login-subscribe" v-model="openDialog" persistent max-width="940px">
         <v-layout row wrap justify-center>
             <v-card>
                 <v-card-title>
@@ -34,23 +34,30 @@ import Subscribe from "../login-subscribe/subscribe/Subscribe.vue";
 import Login from "../login-subscribe/login/Login.vue";
 
 export default {
-    props: ['dialog'],
+    props: ['openDialog'],
     components: {
         Subscribe,
         Login
     },
     methods:{
         fermerModal(){
-            this.dialog[0] = false;
-            // this.dialog.isOpenModel = false;
-        }
+            this.$emit('update:openDialog', false);
+        },
     },
-  data(){
+    data:function(){
         return {
-            get openModal(){
-                return this.dialog && this.dialog.isOpenModel;
-            },
+            isOpenModal:false
         }
     },
+    computed: {
+        
+    },
+    watch: {
+        // openModal:function(){
+        //     this.isOpenModal = JSON.parse(this.dialog);
+        //     console.log()
+        // }
+    },
+    
 }
 </script>

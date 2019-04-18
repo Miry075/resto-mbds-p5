@@ -2,3 +2,7 @@
     background:unset!important;
     color: rgba(0,0,0,.87);
 }
+
+#total-orders{
+    padding: 1.5em;
+}

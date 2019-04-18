@@ -1,19 +1,35 @@
 <template>
-    <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="">
-        <!-- slides -->
-        <swiper-slide>I'm Slide 1</swiper-slide>
-        <swiper-slide>I'm Slide 2</swiper-slide>
-        <swiper-slide>I'm Slide 3</swiper-slide>
-        <swiper-slide>I'm Slide 4</swiper-slide>
-        <swiper-slide>I'm Slide 5</swiper-slide>
-        <swiper-slide>I'm Slide 6</swiper-slide>
-        <swiper-slide>I'm Slide 7</swiper-slide>
-        <!-- Optional controls -->
-        <div class="swiper-pagination"  slot="pagination"></div>
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
-        <div class="swiper-scrollbar"   slot="scrollbar"></div>
-    </swiper>
+    <carousel-3d>
+        <slide v-for="(resto, index) in restaurants" :key="index" :index="index" >
+            <v-layout wrap>
+                <v-flex xs12>
+                    <v-card color="purple" class="white--text">
+                        <v-layout row>
+                            <v-flex xs7>
+                                <v-card-title primary-title>
+                                    <div>
+                                        <div class="headline">{{resto.nom}}</div>
+                                        <div>Specialité </div>
+                                    </div>
+                                </v-card-title>
+                            </v-flex>
+                            <v-flex xs5>
+                                <v-img
+                                    src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"
+                                    height="125px"
+                                    contain
+                                ></v-img>
+                            </v-flex>
+                        </v-layout>
+                        <v-divider light></v-divider>
+                        <v-card-actions class="pa-3">
+                            <v-btn outline color="orange" >Carte & Menu</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+        </slide>
+    </carousel-3d>
 </template>
 
 <script src="./restaurant-slider-component.js"></script>

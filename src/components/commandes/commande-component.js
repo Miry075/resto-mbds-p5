@@ -3,7 +3,7 @@ import Component from 'vue-class-component';
 
 import ListPlat from './list-plat/ListPlat.vue'
 import ListOrder from './list-order/ListOrder.vue'
-// import RestaurantSlider from '../restaurants/resto-slider/RestaurantSlider.vue';
+import RestaurantSlider from '../restaurants/resto-slider/RestaurantSlider.vue';
 import LoginSubscribe from '../login-subscribe/LoginSubscribe.vue'
 import RestaurantAutocomplete from "../restaurants/resto-autocomplete/RestaurantAutocomplete.vue";
 
@@ -14,14 +14,14 @@ var restaurantsRef = db.ref("restaurant");
 // @Component({})
 export default {
     data() {
-        return { 
-            restaurants:[],
-            open:false,
-            typehorsdOeuvre:"Hors d'oeuvre",
-            typePlat:"Plat",
-            typeDessert:"Dessert",
+        return {
+            restaurants: [],
+            open: false,
+            typehorsdOeuvre: "Hors d'oeuvre",
+            typePlat: "Plat",
+            typeDessert: "Dessert",
             orders: [
-            ],    
+            ],
             horsdoeuvre: [
                 { image: 'http://omnomlagos.com/wp-content/uploads/2015/07/Omnomlagos-Plantain-Prawn-and-Kale-Hors-doeuvres.jpg', name: 'Marc	Moreno', prix: '30' },
                 { image: 'http://omnomlagos.com/wp-content/uploads/2015/07/Omnomlagos-Plantain-Prawn-and-Kale-Hors-doeuvres.jpg', name: 'Wallace	Frank', prix: '31' },
@@ -62,18 +62,17 @@ export default {
                 sortBy: 'name'
             },
             selected: [],
-
         }
     },
-    methods:{
-        openDialog(){
+    methods: {
+        openDialog() {
             this.open = true;
         }
     },
     components: {
         ListPlat,
         ListOrder,
-        // RestaurantSlider,
+        RestaurantSlider,
         LoginSubscribe,
         RestaurantAutocomplete
     },
@@ -81,14 +80,23 @@ export default {
     mounted() {
         restaurantsRef.once("value", Response => {
             Response.forEach(item => {
-            this.restaurants.push({
+                this.restaurants.push({
                     id: item.child("id").val(),
                     nom: item.child("nom").val(),
                     cuisine: item.child("cuisine").val()
                 });
             });
         });
-
         console.log(' this.restaurants :::', this.restaurants)
+    },
+    computed: {
+        // restaurants: {
+        //     get: function () {
+        //         return this._restaurants;
+        //     },
+        //     set: function (newVal) {
+        //         this._restaurants = newVal;
+        //     }
+        // }
     }
 }

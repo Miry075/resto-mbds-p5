@@ -1,16 +1,18 @@
 
 import Vue from 'vue'
-import VueAwesomeSwiper from 'vue-awesome-swiper'
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
+// import VueAwesomeSwiper from 'vue-awesome-swiper'
+// import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import {Carousel3d, Slide} from 'vue-carousel-3d';
 
-import 'swiper/dist/css/swiper.css'
+// import 'swiper/dist/css/swiper.css'
 
-Vue.use(VueAwesomeSwiper)
+// Vue.use(Carousel3d)
 
 export default {
+    props:['restaurants'],
     components: {
-        swiper,
-        swiperSlide
+        Carousel3d,
+        Slide
     },
     name: 'carrousel',
     data() {
@@ -21,13 +23,10 @@ export default {
       }
     },
     computed: {
-      swiper() {
-        return this.$refs.mySwiper.swiper
-      }
+      
     },
     mounted() {
       // current swiper instance
       console.log('this is current swiper instance object', this.swiper)
-      this.swiper.slideTo(3, 1000, false)
     }
 }

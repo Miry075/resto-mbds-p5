@@ -39,28 +39,23 @@
                 solo-inverted
                 style="max-width: 300px;"
                 />
-                <v-menu offset-y content-class="dropdown-menu" transition="slide-y-transition">
+                <v-btn flat @click="openDialog()" >Log in</v-btn>
+                <v-btn flat @click="openDialog()" >S'inscrire</v-btn>
+                <!-- <v-menu offset-y content-class="dropdown-menu" transition="slide-y-transition">
                     <v-btn slot="activator" flat icon color="rgba(0, 0, 0, 0.87)">
                         <v-icon>list</v-icon>
                     </v-btn>
                     <v-card>
-                        <!-- <v-list dense>
-                            <v-list-tile v-for="notification in notifications" :key="notification">
-                                <v-list-tile-title
-                                v-text="notification"
-                                />
-                            </v-list-tile>
-                        </v-list> -->
                         <v-card-actions>
                             <v-btn flat @click="openDialog()" color="orange">Log in</v-btn>
                             <v-btn flat @click="openDialog()" color="orange">S'inscrire</v-btn>
                         </v-card-actions>
                     </v-card>
-                </v-menu>
+                </v-menu> -->
             </v-layout>
             </v-container>
         </v-toolbar>
-        <LoginSubscribe :dialog="dialog"></LoginSubscribe>
+        <LoginSubscribe :openDialog="dialog" @update:openDialog="dialog=$event"></LoginSubscribe>
     </div>
 </template>
 
@@ -69,7 +64,7 @@ import LoginSubscribe from "../login-subscribe/LoginSubscribe.vue";
 export default {
     data: () => ({
         drawer: null,
-        dialog: [],
+        dialog: false,
         // {
         //     isOpenModel : false,
         // },
@@ -108,8 +103,7 @@ export default {
 
     methods: {
         openDialog() {
-            this.dialog[0] = true;
-            console.log('dialog::: ',this.dialog);
+            this.dialog = true;
         }
     }
 };

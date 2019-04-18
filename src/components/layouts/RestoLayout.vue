@@ -11,6 +11,10 @@
 <style lang="css">
     #content-buffa, #content-header {
         padding: 0px 0px 0px!important;
+        /* height: 100% */
+    }
+    #container-buffa{
+        padding-top: 0px
     }
     .theme--light.v-table {
         background-color: #f5f5f5;

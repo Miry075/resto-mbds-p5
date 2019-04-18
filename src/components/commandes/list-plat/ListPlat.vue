@@ -9,7 +9,7 @@
         ref="dTable"
         class="elevation-1">
         <template slot="items" scope="props">
-            <tr @click="props.expanded = !props.expanded">
+            <tr @click="clickRow(props.item)">
                 <td class="text-xs"><v-img v-bind:src="`${props.item.image}`" aspect-ratio="2.75"></v-img></td>
                 <td class="text-xs">{{ props.item.name }}</td>
                 <td class="text-xs">{{ props.item.prix }}</td>
@@ -32,7 +32,7 @@
                         </v-flex>
                         <v-flex xs6>
                             <div class="text-xs-center align-center">
-                                <v-btn flat color="orange" @click="addToOrder(props.item)">Ajouter</v-btn>
+                                <v-btn outline color="indigo" @click="addToOrder(props.item)">Ajouter</v-btn>
                             </div>
                         </v-flex>
                     </v-layout>

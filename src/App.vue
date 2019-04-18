@@ -17,6 +17,9 @@ html, body {
     min-height: 100% !important;
     height: 100%;
 }
+.v-btn {
+    text-transform: unset!important;
+}
 #app{
     /* background-image: url('../../assets/background-1.jpg'); */
     background-image: url(https://www.ordermanzer.mu/modules/cms/images/1-about-bg.jpg);
