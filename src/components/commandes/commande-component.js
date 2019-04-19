@@ -11,6 +11,7 @@ import { db } from "../../Firebase";
 
 var restaurantsRef = db.ref("restaurant");
 var platRef = db.ref("plat");
+var cuisineRef = db.ref("cuisine");
 
 // @Component({})
 export default {
@@ -50,11 +51,17 @@ export default {
     mounted() {
         restaurantsRef.once("value", Response => {
             Response.forEach(item => {
-                this.restaurants.push({
-                    id: item.key,
-                    nom: item.child("nom").val(),
-                    cuisine: item.child("cuisine").val()
-                });
+                cuisineRef
+                    .orderByKey()
+                    .equalTo(item.child("cuisine").val())
+                    .on("child_added", snapshot => {
+                        this.restaurants.push({
+                            id: item.key,
+                            nom: item.child("nom").val(),
+                            cuisine: snapshot.child("nom").val(),
+                            photo: item.child("photo").val()
+                        });
+                    });
             });
             if (this.restaurants.length != 0) {
                 let restoParam = (this.resto != undefined) ? this.resto : this.restaurants[0].id;

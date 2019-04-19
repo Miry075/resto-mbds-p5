@@ -9,13 +9,13 @@
                                 <v-card-title primary-title>
                                     <div>
                                         <div class="headline">{{resto.nom}}</div>
-                                        <div>Specialité </div>
+                                        <div>{{resto.cuisine}}</div>
                                     </div>
                                 </v-card-title>
                             </v-flex>
                             <v-flex xs5>
                                 <v-img
-                                    src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"
+                                    :src=resto.photo
                                     height="125px"
                                     contain
                                 ></v-img>
