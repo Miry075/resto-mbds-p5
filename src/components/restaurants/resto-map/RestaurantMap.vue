@@ -1,7 +1,7 @@
 <template>
   <div class="mapouter">
     <div class="gmap_canvas">
-        <iframe
+      <iframe
         id="gmap_canvas"
         width="100%"
         height="100%"
@@ -10,9 +10,9 @@
         scrolling="no"
         marginheight="0"
         marginwidth="0"
-        />
+      />
     </div>
-</div>
+  </div>
 </template>
 
 <script src="./restaurant-map-component.js"></script>

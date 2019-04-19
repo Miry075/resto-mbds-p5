@@ -2,18 +2,24 @@ import RestoLayout from '../components/layouts/RestoLayout.vue'
 import Restaurant from '../components/restaurants/Restaurant.vue'
 import Commande from '../components/commandes/Commande.vue'
 import Contact from '../components/contact/Contact.vue'
-import Restaurants from '../components/Restaurants.vue'
+import Restaurants from '../components/restaurants/Restaurant.vue'
 
 const routes = [
     {
         path: "/",
         component: RestoLayout,
-        redirect: "/commandes",
+        redirect: "/restaurants-list",
         children: [
             {
                 path: "restaurants",
                 name: "Restaurant",
                 component: Restaurant
+            },
+            {
+                path: "commandes/:resto",
+                name: "Commande",
+                component: Commande,
+                props: true
             },
             {
                 path: "commandes",

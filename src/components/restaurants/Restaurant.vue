@@ -1,9 +1,9 @@
 <template>
     <v-container>
-        <h1>RESTAURANT</h1>
-        <v-layout row>
+        <h1>RESTAURANTS</h1>
+        <!-- <v-layout row>
                 <RestaurantMap></RestaurantMap>
-        </v-layout>
+        </v-layout> -->
         <v-layout row>
                 <RestaurantList></RestaurantList>
         </v-layout>
