@@ -31,8 +31,7 @@ export default {
                 { text: 'Description', value: 'description' },
                 { text: 'Cuisine', value: 'cuisine' },
                 { text: 'Modifier', value: '' },
-                { text: 'Supprimer', value: '' },
-                { text: 'Ajouter', value: '' }
+                { text: 'Supprimer', value: '' }
             ],
             options: {
                 color: "primary",

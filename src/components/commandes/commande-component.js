@@ -58,7 +58,10 @@ export default {
     },
     methods: {
         saveCommande() {
-            this.commandeRef.push(...this.orders);
+            this.orders.forEach(item => {
+                item.user = sessionStorage.get("username");
+                this.commandeRef.push(item);
+            });
         },
         onCancel() {
             console.log('User cancelled the loader.')
@@ -110,8 +113,7 @@ export default {
         var fistRestaurant = null;
         var index = 0;
 
-        if (this.id != null) {
-            console.log("this.id=" + this.id);
+        if (this.id != null && this.id != 'id') {
             restaurantsRef
                 .orderByKey()
                 .equalTo(this.id)
@@ -154,7 +156,7 @@ export default {
     },
     watch: {
         user(auth) {
-            if (!!auth) {
+            if (!auth) {
                 this.$router.replace(this.nextRoute)
             }
         }
@@ -166,15 +168,11 @@ export default {
                 return this._restaurant;
             },
             set: function (newVal) {
-                // this.isLoading = true;
                 this._restaurant = newVal;
-                console.log("selectedRestaurant ::: ", newVal);
                 if (newVal) {
                     if (newVal) {
-                        console.log("Current resto" + newVal.nom + " = " + newVal.key);
                         this.findPlatsByResto(newVal);
                     }
-                    // this.isLoading = false;
                 }
             }
         }

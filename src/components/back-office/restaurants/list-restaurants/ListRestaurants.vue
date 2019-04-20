@@ -36,7 +36,7 @@
                 <v-icon>delete</v-icon>
             </v-btn>
         </td>
-       <td class="text-xs-right">
+       <!-- <td class="text-xs-right">
 
         <v-menu offset-y content-class="dropdown-menu" transition="slide-y-transition">
             <v-btn slot="activator" flat icon color="rgba(0, 0, 0, 0.87)">
@@ -50,7 +50,7 @@
             </v-card>
         </v-menu>
 
-       </td>
+       </td> -->
         </template>
         <template v-slot:pageText="props">
         Lignes {{ props.pageStart }} - {{ props.pageStop }} de {{ props.itemsLength }}

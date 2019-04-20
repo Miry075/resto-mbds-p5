@@ -21,27 +21,10 @@
             flat
           >{{ link.text }}</v-btn>
           <v-spacer/>
-          <!-- <v-text-field
-            append-icon="search"
-            flat
-            hide-details
-            solo-inverted
-            style="max-width: 300px;"v-show="!user"  
-          />-->
           <v-btn flat v-show="!user" @click="openDialog()">Log in</v-btn>
           <v-btn flat v-show="!user" @click="openDialog()">S'inscrire</v-btn>
+          <v-btn flat v-show="user" @click="myOrders()">Mes Commandes</v-btn>
           <v-btn flat v-show="user" @click="logout()">Deconnexion</v-btn>
-          <!-- <v-menu offset-y content-class="dropdown-menu" transition="slide-y-transition">
-                    <v-btn slot="activator" flat icon color="rgba(0, 0, 0, 0.87)">
-                        <v-icon>list</v-icon>
-                    </v-btn>
-                    <v-card>
-                        <v-card-actions>
-                            <v-btn flat @click="openDialog()" color="orange">Log in</v-btn>
-                            <v-btn flat @click="openDialog()" color="orange">S'inscrire</v-btn>
-                        </v-card-actions>
-                    </v-card>
-          </v-menu>-->
         </v-layout>
       </v-container>
     </v-toolbar>
@@ -58,9 +41,6 @@ export default {
   data: () => ({
     drawer: null,
     dialog: false,
-    // {
-    //     isOpenModel : false,
-    // },
     notifications: [
       "Mike, John responded to your email",
       "You have 5 new tasks",
@@ -77,7 +57,7 @@ export default {
       {
         icon: "description",
         text: "Carte & Menu",
-        route: "/commandes"
+        route: "/commandes/id"
       },
       {
         icon: "home",
@@ -96,11 +76,16 @@ export default {
     LoginSubscribe
   },
   methods: {
+    myOrders(){
+        this.$router.push('/my-orders');
+        
+    },
     openDialog() {
       this.dialog = true;
     },
-    logout(){
+    logout() {
       this.$auth.logout();
+      sessionStorage.clear();
     }
   }
 };

@@ -15,7 +15,7 @@ html {
 
 html, body {
     min-height: 100% !important;
-    height: 100%;
+    height: 100%!important;
 }
 .v-btn {
     text-transform: unset!important;

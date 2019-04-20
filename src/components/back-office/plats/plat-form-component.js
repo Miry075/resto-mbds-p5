@@ -27,7 +27,6 @@ export default {
             },
             set: function (newVal) {
                 this._restaurant = newVal;
-                console.log("newVal::::: ", this._restaurant);
             }
         }
     }

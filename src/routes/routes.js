@@ -8,6 +8,7 @@ import RestaurantForm from "../components/back-office/restaurants/form-restauran
 import Restaurants from '../components/restaurants/Restaurant.vue'
 import Login from '../components/login-subscribe/login/login.vue'
 import Subscribe from '../components/login-subscribe/subscribe/subscribe.vue'
+import SpaceMember from '../components/spacemember/SpaceMember.vue'
 
 const routes = [
     {
@@ -61,7 +62,12 @@ const routes = [
                 path: "subscribe",
                 name: "Subscribe",
                 component: Subscribe
-            }
+            },
+            {
+                path: "my-orders",
+                name: "Mes Commande",
+                component: SpaceMember
+            },
         ]
     }
 ];

@@ -39,6 +39,9 @@
                  <h2>Menu</h2>
                  <ListPlat v-bind:plats="desserts" v-bind:type="typeDessert" v-bind:output-data="orders"></ListPlat>
             </v-flex> -->
+            <v-flex xs12   v-show="!user">
+                <h1>Veuillez vous s'inscrire ou s'authentifier pour effectuer une commande </h1>
+            </v-flex>
             <v-flex xs12   v-show="user">
                 <h2>Liste des commandes </h2>
                 <ListOrder v-bind:orders="orders"></ListOrder>

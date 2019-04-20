@@ -52,8 +52,8 @@ export default {
                             image:res,
                             description: this_s.restaurantToSave.description
                         });
-                        this.isLoading= false;
                     });
+                    this.isLoading= false;
                 });
             }
             else{ //update if already existing in the data base
