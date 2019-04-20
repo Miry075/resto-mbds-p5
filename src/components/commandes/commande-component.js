@@ -6,29 +6,38 @@ import ListOrder from './list-order/ListOrder.vue'
 import RestaurantSlider from '../restaurants/resto-slider/RestaurantSlider.vue';
 import LoginSubscribe from '../login-subscribe/LoginSubscribe.vue'
 import RestaurantAutocomplete from "../restaurants/resto-autocomplete/RestaurantAutocomplete.vue";
+import VueSingleSelect from "vue-single-select";
+Vue.component('vue-single-select', VueSingleSelect);
 
 import { db } from "../../Firebase";
 
 var restaurantsRef = db.ref("restaurant");
-var platRef = db.ref("plat");
 var cuisineRef = db.ref("cuisine");
+var platRef = db.ref("plat");
+var platTypeRef = db.ref("type");
 
 // @Component({})
 export default {
-    props: ["resto"],
     data() {
         return {
-            restaurant: { id: "", nom: "", cuisine: "", photo: "", description: "" },
+            _restaurant: {},
             restaurants: [],
+            typePlats: [],
             open: false,
             typehorsdOeuvre: "Hors d'oeuvre",
             typePlat: "Plat",
             typeDessert: "Dessert",
             orders: [
             ],
-            horsdoeuvre: [],
-            plats: [],
-            desserts: [],
+            horsdoeuvre: [
+                // { image: 'http://omnomlagos.com/wp-content/uploads/2015/07/Omnomlagos-Plantain-Prawn-and-Kale-Hors-doeuvres.jpg', name: 'Marc	Moreno', prix: '30' },
+            ],
+            plats: [
+                // { image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3Eeeo5cR1iFLvK-IFMkux3f0MsbT-X9OgGe7KiWVI2DyXSyjTFw', name: 'Marc	Moreno', prix: '30' },
+            ],
+            desserts: [
+                // { image: 'https://www.cookomix.com/wp-content/uploads/2017/04/glace-au-chocolat-thermomix-800x600.jpg', name: 'Marc	Moreno', prix: '30' },
+            ],
             pagination: {
                 sortBy: 'name'
             },
@@ -38,6 +47,29 @@ export default {
     methods: {
         openDialog() {
             this.open = true;
+        },
+        findPlatsByResto(restaurant) {
+            platRef.orderByChild("restaurant").equalTo(restaurant.key).once("value", response => {
+                response.forEach(plat => {
+                    var current = {
+                        key: plat.key,
+                        name: plat.child('nom').val(),
+                        description: plat.child('description').val(),
+                        image: plat.child('photo').val(),
+                        prix: plat.child('prix').val(),
+                        type: plat.child('type').val()
+                    }
+                    if (current.type == this.typePlat) {
+                        this.plats.push(current);
+                    }
+                    if (current.type == this.typehorsdOeuvre) {
+                        this.horsdoeuvre.push(current);
+                    }
+                    if (current.type == this.typeDessert) {
+                        this.desserts.push(current);
+                    }
+                });
+            });
         }
     },
     components: {
@@ -49,75 +81,54 @@ export default {
     },
 
     mounted() {
+        var this_s = this;
+        var fistRestaurant = null;
+        var index = 0;
         restaurantsRef.once("value", Response => {
             Response.forEach(item => {
-                cuisineRef
-                    .orderByKey()
-                    .equalTo(item.child("cuisine").val())
-                    .on("child_added", snapshot => {
-                        this.restaurants.push({
-                            id: item.key,
-                            nom: item.child("nom").val(),
-                            cuisine: snapshot.child("nom").val(),
-                            photo: item.child("photo").val()
-                        });
+                if (index == 0) {
+                    this_s.selectedRestaurant = this_s.restaurants[0];
+                    this_s.findPlatsByResto(item);
+                }
+                cuisineRef.orderByKey().equalTo(item.child("cuisine").val()).on("child_added", cuisine => {
+                    this_s.restaurants.push({
+                        key: item.key,
+                        id: item.child("id").val(),
+                        nom: item.child("nom").val(),
+                        cuisine: {
+                            key: cuisine.key,
+                            nom: cuisine.child("nom").val()
+                        },
+                        image: item.child("image").val(),
+                        description: item.child("description").val()
                     });
+                })
+                index++;
             });
-            if (this.restaurants.length != 0) {
-                let restoParam = (this.resto != undefined) ? this.resto : this.restaurants[0].id;
-                restaurantsRef
-                    .orderByKey()
-                    .equalTo(restoParam)
-                    .on("child_added", snapshot => {
-                        this.restaurant.id = snapshot.key;
-                        this.restaurant.nom = snapshot.child("nom").val();
-                        this.restaurant.photo = snapshot.child("photo").val();
-                        this.restaurant.description =
-                            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages.";
-                    });
-
-                platRef.orderByChild("restaurant")
-                    .equalTo(this.restaurant.id)
-                    .on("child_added", Response => {
-                        if (Response.child("type").val() == this.typehorsdOeuvre) {
-                            this.horsdoeuvre.push({
-                                id: Response.key,
-                                name: Response.child("nom").val(),
-                                prix: Response.child("prix").val(),
-                                image: Response.child("photo").val()
-
-                            });
-                        }
-                        if (Response.child("type").val() == this.typePlat) {
-                            this.plats.push({
-                                id: Response.key,
-                                name: Response.child("nom").val(),
-                                prix: Response.child("prix").val(),
-                                image: Response.child("photo").val()
-                            });
-                        }
-                        if (Response.child("type").val() == this.typeDessert) {
-                            this.desserts.push({
-                                id: Response.key,
-                                name: Response.child("nom").val(),
-                                prix: Response.child("prix").val(),
-                                image: Response.child("photo").val()
-                            });
-                        }
-                    });
-            }
         });
-
-
+        platTypeRef.once("value", response => {
+            response.forEach(plat => {
+                this.typePlats.push({
+                    key: plat.key,
+                    nom: plat.child('nom').val(),
+                    description: plat.child('description').val(),
+                    image: plat.child('photo').val(),
+                    prix: plat.child('prix').val()
+                });
+            });
+        });
     },
     computed: {
-        // restaurants: {
-        //     get: function () {
-        //         return this._restaurants;
-        //     },
-        //     set: function (newVal) {
-        //         this._restaurants = newVal;
-        //     }
-        // }
+        selectedRestaurant: {
+            get: function () {
+                return this._restaurant;
+            },
+            set: function (newVal) {
+                this._restaurant = newVal;
+                if(newVal){
+                    this.findPlatsByResto(newVal);
+                }
+            }
+        }
     }
 }

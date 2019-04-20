@@ -9,6 +9,15 @@ var config = {
   messagingSenderId: "742376087926"
 };
 
-var firebaseApp = Firebase.initializeApp(config);
+// var config = {
+//     apiKey: "AIzaSyCnloo8cxSv6pKDjTjiiWEMJ3zBsfwtEZc",
+//     authDomain: "restau-buffa.firebaseapp.com",
+//     databaseURL: "https://restau-buffa.firebaseio.com",
+//     projectId: "restau-buffa",
+//     storageBucket: "restau-buffa.appspot.com",
+//     messagingSenderId: "601728809240"
+//   };
+  var firebaseApp = Firebase.initializeApp(config);
 
 export const db = firebaseApp.database();
+export const storage = firebaseApp.storage();
