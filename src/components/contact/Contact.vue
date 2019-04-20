@@ -1,6 +1,48 @@
 <template>
   <div id="contact">
-    <p>Contact</p>
+      <h1>Nos contacts</h1>
+        <v-layout>
+            <v-flex md6>
+                <v-card>
+                    <!-- <v-img
+                    src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+                    aspect-ratio="2.75"
+                    ></v-img> -->
+
+                    <v-card-title primary-title>
+                    <div>
+                        <h3 class="headline mb-0">Hery Mirindra HARIVAO</h3>
+                        <div> hery-mirindra.harivao@etu.univ-cotedazur.fr </div>
+                    </div>
+                    </v-card-title>
+
+                    <!-- <v-card-actions>
+                    <v-btn flat color="orange">Share</v-btn>
+                    <v-btn flat color="orange">Explore</v-btn>
+                    </v-card-actions> -->
+                </v-card>
+            </v-flex>
+            <v-flex md6>
+                <v-card>
+                    <!-- <v-img
+                    src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+                    aspect-ratio="2.75"
+                    ></v-img> -->
+
+                    <v-card-title primary-title>
+                    <div>
+                        <h3 class="headline mb-0">Miangaly RANDRIAMIFIDY</h3>
+                        <div> miangaly-ravaka.randriamifidy@etu.univ-cotedazur.fr </div>
+                    </div>
+                    </v-card-title>
+
+                    <!-- <v-card-actions>
+                    <v-btn flat color="orange">Share</v-btn>
+                    <v-btn flat color="orange">Explore</v-btn>
+                    </v-card-actions> -->
+                </v-card>
+            </v-flex>
+    </v-layout>
   </div>
 </template>
 

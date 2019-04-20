@@ -102,7 +102,7 @@ export default {
 }
 
 
-.theme--light.v-toolbar {
+.v-toolbar.theme--light {
   /* background-color: #f5f5f5; */
   background-color: #8c590c;
   color: rgba(0, 0, 0, 0.87);

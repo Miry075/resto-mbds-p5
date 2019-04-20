@@ -28,11 +28,11 @@
                 <ListPlat v-bind:plats="horsdoeuvre" v-bind:type="typehorsdOeuvre" v-bind:output-data="orders"></ListPlat>
             </v-flex>
             <v-flex xs4>
-                 <h2>Plat</h2>
+                 <h2>Plats</h2>
                  <ListPlat v-bind:plats="plats" v-bind:type="typePlat" v-bind:output-data="orders"></ListPlat>
             </v-flex>
             <v-flex xs4>
-                 <h2>Dessert</h2>
+                 <h2>Desserts</h2>
                  <ListPlat v-bind:plats="desserts" v-bind:type="typeDessert" v-bind:output-data="orders"></ListPlat>
             </v-flex>
              <!-- <v-flex xs3>
