@@ -1,7 +1,10 @@
 {
-  "name": "my-app-vue-cli1",
+  "name": "food",
   "description": "A Vue.js project",
   "version": "1.0.0",
+  "engines": {
+    "node": "10.15.1"
+  },
   "author": "Miangaly <miangaly.randriamifidy@gmail.com>",
   "license": "MIT",
   "private": true,
