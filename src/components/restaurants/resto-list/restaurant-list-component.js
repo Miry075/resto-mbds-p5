@@ -48,7 +48,7 @@ export default {
                         });
                     });
             });
-            
+
             // debugger
         });
         cuisinesRef.once("value", cuisines => {
@@ -58,18 +58,26 @@ export default {
         });
     },
     computed: {
-        objectRestaurant:{
-            get:function(){
+        objectRestaurant: {
+            get: function () {
                 var result = [];
-                var comptes = this.restaurants.length / 6;
+                var resto = this.restaurants.filter(restaurant => {
+                    if (this.cuisine != undefined) {
+                        return (
+                            restaurant.nom.toLowerCase().includes(this.nom.toLowerCase()) && restaurant.cuisine.toLowerCase().includes(this.cuisine.toLowerCase())
+                        );
+                    }
+                    return restaurant.nom.toLowerCase().includes(this.nom.toLowerCase());
+                });
+                var comptes = resto.length / 6;
                 for (var i = 1; i <= comptes; i++) {
-                    result.push(this.restaurants.slice((i -1) * 6, i * 6));
+                    result.push(resto.slice((i - 1) * 6, i * 6)); //regrouper les restaurants pas 6 elements
                 }
                 return result;
             }
         },
         filteredList: {
-            get:function(){
+            get: function () {
                 return this.restaurants.filter(restaurant => {
                     if (this.cuisine != undefined) {
                         return (
