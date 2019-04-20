@@ -9,7 +9,8 @@ import RestaurantAutocomplete from "../restaurants/resto-autocomplete/Restaurant
 import VueSingleSelect from "vue-single-select";
 Vue.component('vue-single-select', VueSingleSelect);
 
-import { db } from "../../Firebase";
+import { db } from "../../Database";
+require('firebase/auth');
 
 var restaurantsRef = db.ref("restaurant");
 var cuisineRef = db.ref("cuisine");
@@ -90,33 +91,28 @@ export default {
                     this_s.selectedRestaurant = this_s.restaurants[0];
                     this_s.findPlatsByResto(item);
                 }
-                cuisineRef.orderByKey().equalTo(item.child("cuisine").val()).on("child_added", cuisine => {
-                    this_s.restaurants.push({
-                        key: item.key,
-                        id: item.child("id").val(),
-                        nom: item.child("nom").val(),
-                        cuisine: {
-                            key: cuisine.key,
-                            nom: cuisine.child("nom").val()
-                        },
-                        image: item.child("image").val(),
-                        description: item.child("description").val()
+                
+                cuisineRef.orderByKey()
+                    .equalTo(item.child("cuisine").val())
+                    .on("child_added", snapshot => {
+                        this.restaurants.push({
+                            id: item.key,
+                            nom: item.child("nom").val(),
+                            cuisine: snapshot.child("nom").val(),
+                            photo: item.child("photo").val(),
+                            description: item.child("description").val()
+                        });
                     });
-                })
+            })
                 index++;
-            });
         });
-        platTypeRef.once("value", response => {
-            response.forEach(plat => {
-                this.typePlats.push({
-                    key: plat.key,
-                    nom: plat.child('nom').val(),
-                    description: plat.child('description').val(),
-                    image: plat.child('photo').val(),
-                    prix: plat.child('prix').val()
-                });
-            });
-        });
+    },
+    watch: {
+        user(auth) {
+            if (!!auth) {
+                this.$router.replace(this.nextRoute)
+            }
+        }
     },
     computed: {
         selectedRestaurant: {

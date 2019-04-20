@@ -21,15 +21,16 @@
             flat
           >{{ link.text }}</v-btn>
           <v-spacer/>
-          <v-text-field
+          <!-- <v-text-field
             append-icon="search"
             flat
             hide-details
             solo-inverted
-            style="max-width: 300px;"
-          />
-          <v-btn flat @click="openDialog()">Log in</v-btn>
-          <v-btn flat @click="openDialog()">S'inscrire</v-btn>
+            style="max-width: 300px;"v-show="!user"  
+          />-->
+          <v-btn flat v-show="!user" @click="openDialog()">Log in</v-btn>
+          <v-btn flat v-show="!user" @click="openDialog()">S'inscrire</v-btn>
+          <v-btn flat v-show="user" @click="logout()">Deconnexion</v-btn>
           <!-- <v-menu offset-y content-class="dropdown-menu" transition="slide-y-transition">
                     <v-btn slot="activator" flat icon color="rgba(0, 0, 0, 0.87)">
                         <v-icon>list</v-icon>
@@ -50,6 +51,9 @@
 
 <script>
 import LoginSubscribe from "../login-subscribe/LoginSubscribe.vue";
+import store from "../../store";
+import { mapState } from "vuex";
+
 export default {
   data: () => ({
     drawer: null,
@@ -82,17 +86,21 @@ export default {
       }
     ]
   }),
-
+  computed: {
+    ...mapState(["user"])
+  },
   props: {
     source: String
   },
   components: {
     LoginSubscribe
   },
-
   methods: {
     openDialog() {
       this.dialog = true;
+    },
+    logout(){
+      this.$auth.logout();
     }
   }
 };

@@ -13,7 +13,7 @@ export default {
     
 }
 */
-import { db } from "../../../Firebase";
+import { db } from "../../../Database";
 
 var restaurantsRef = db.ref("restaurant");
 var cuisinesRef = db.ref("cuisine");

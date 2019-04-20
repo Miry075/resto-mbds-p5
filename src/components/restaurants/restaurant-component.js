@@ -3,7 +3,7 @@ import Component from 'vue-class-component';
 import RestaurantCard from './resto-card/RestaurantCard.vue'
 import RestaurantMap  from "./resto-map/RestaurantMap.vue";
 import RestaurantList  from "./resto-list/RestaurantList.vue";
-import { db } from "../../Firebase";
+import { db } from "../../Database";
 
 var restaurantsRef = db.ref("restaurant");
 
