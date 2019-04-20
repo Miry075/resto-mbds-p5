@@ -23,7 +23,7 @@
                     <!-- <td class="text-xs">{{ props.item.type }}</td> -->
                     <td class="text-xs"><v-img v-bind:src="`${props.item.image}`" aspect-ratio="2.75"></v-img></td>
                     <td class="text-xs">{{ props.item.name }}</td>
-                    <td class="text-xs">{{ props.item.prix }}</td>
+                    <td class="text-xs">{{ formatPrice(props.item.prix) }}</td>
                 </tr>
             </template>
             <template slot="expand" scope="props">

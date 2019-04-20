@@ -19,9 +19,9 @@
               </td>
               <td class="text-xs">{{ props.item.name }}</td>
               <td class="text-xs">{{ props.item.type }}</td>
-              <td class="text-xs">{{ props.item.prix }}</td>
+              <td class="text-xs">{{ formatPrice(props.item.prix) }}</td>
               <td class="text-xs">{{ props.item.quantite }}</td>
-              <td class="text-xs">{{ props.item.prixTotal}}</td>
+              <td class="text-xs">{{ formatPrice(props.item.prixTotal)}}</td>
             </tr>
           </template>
           <template slot="expand" scope="props">

@@ -58,10 +58,15 @@ export default {
     },
     methods: {
         saveCommande() {
+            this.message = "Saving ...";
+            this.isLoading= true;
             this.orders.forEach(item => {
                 item.user = sessionStorage.get("username");
+                item.orderDqte = new Date();
                 this.commandeRef.push(item);
             });
+            debugger
+            this.isLoading= false;
         },
         onCancel() {
             console.log('User cancelled the loader.')
@@ -71,6 +76,7 @@ export default {
         },
         findPlatsByResto(restaurant) {
             var this_s = this;
+            this.message = "Loading ...";
             this.isLoading = true;
             platRef.orderByChild("restaurant").equalTo(restaurant.key).once("value", response => {
                 this.plats = [];

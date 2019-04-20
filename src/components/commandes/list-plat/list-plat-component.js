@@ -36,6 +36,10 @@ export default {
         onSearch() {
             // this.
         },
+        formatPrice(value) {
+            let val = (value / 1).toFixed(2).replace('.', ',')
+            return 'Rs '+ val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        },
         clickRow(item) {
             if (store.state.user) {
                 this.plats.forEach(element => {

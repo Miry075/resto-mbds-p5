@@ -14,7 +14,7 @@ const routes = [
     {
         path: "/",
         component: RestoLayout,
-        redirect: "/commandes",
+        redirect: "/restaurants",
         children: [
             {
                 path: "restaurants",
