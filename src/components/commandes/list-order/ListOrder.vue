@@ -1,8 +1,9 @@
-<template>
+<template >
   <div>
     <v-layout>
       <v-flex md8>
         <v-data-table
+        
           :headers="mainHeaders"
           :items="orders"
           item-key="name"
@@ -62,7 +63,7 @@
           </template>
         </v-data-table>
       </v-flex>
-      <v-flex md4>
+      <v-flex md4 v-show="user">
         <div id="total-orders">
           <h2>CAISSE: {{formatPrice(totalOrders)}}</h2>
           <div class="text-xs-center align-center">

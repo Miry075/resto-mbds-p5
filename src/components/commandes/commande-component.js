@@ -10,7 +10,8 @@ import VueSingleSelect from "vue-single-select";
 Vue.component('vue-single-select', VueSingleSelect);
 
 import { db } from "../../Database";
-require('firebase/auth');
+
+import { mapState } from "vuex";
 
 var restaurantsRef = db.ref("restaurant");
 var cuisineRef = db.ref("cuisine");
@@ -140,6 +141,7 @@ export default {
         }
     },
     computed: {
+        ...mapState(["user"]),
         selectedRestaurant: {
             get: function () {
                 return this._restaurant;

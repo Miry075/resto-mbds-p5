@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Component from 'vue-class-component';
-
+import { mapState } from "vuex";
 
 export default {
     props: ['orders'],
     data() {
         return {
-            itemChecker:null,
+            itemChecker: null,
             numberOfOrder: 0,
             mainHeaders: [
                 { text: 'Photo', value: 'image' },
@@ -20,18 +20,18 @@ export default {
     },
     methods: {
         formatPrice(value) {
-            let val = (value/1).toFixed(2).replace('.', ',')
+            let val = (value / 1).toFixed(2).replace('.', ',')
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
         },
         clickRow(item) {
             this.orders.forEach(element => {
                 this.$set(this.$refs.dTable.expanded, element.name, false);
             });
-            if((this.itemChecker && this.itemChecker.id != item.id) || !this.itemChecker){
+            if ((this.itemChecker && this.itemChecker.id != item.id) || !this.itemChecker) {
                 this.$set(this.$refs.dTable.expanded, item.name, true);
                 this.itemChecker = item;
             }
-            else{
+            else {
                 this.itemChecker = null;
             }
         },
@@ -58,8 +58,9 @@ export default {
         }
     },
     computed: {
+        ...mapState(["user"]),
         totalOrders: {
-            get: function() {
+            get: function () {
                 var results = 0;
                 if (this.orders && this.orders.length > 0) {
                     results = this.orders.map(item => item.prixTotal).reduce((c, n) => Number(c) + Number(n));

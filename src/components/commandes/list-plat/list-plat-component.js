@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Component from 'vue-class-component';
+import store from '../../../store';
 
 
 export default {
@@ -36,15 +37,17 @@ export default {
             // this.
         },
         clickRow(item) {
-            this.plats.forEach(element => {
-                this.$set(this.$refs.dTable.expanded, element.name, false);
-            });
-            if ((this.itemChecker && this.itemChecker.name != item.name) || !this.itemChecker) {
-                this.$set(this.$refs.dTable.expanded, item.name, true);
-                this.itemChecker = item;
-            }
-            else {
-                this.itemChecker = null;
+            if (store.state.user) {
+                this.plats.forEach(element => {
+                    this.$set(this.$refs.dTable.expanded, element.name, false);
+                });
+                if ((this.itemChecker && this.itemChecker.name != item.name) || !this.itemChecker) {
+                    this.$set(this.$refs.dTable.expanded, item.name, true);
+                    this.itemChecker = item;
+                }
+                else {
+                    this.itemChecker = null;
+                }
             }
         },
         addToOrder(item) {

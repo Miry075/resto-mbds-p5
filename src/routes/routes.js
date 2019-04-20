@@ -23,19 +23,13 @@ const routes = [
             {
                 path: "commandes",
                 name: "Commandes",
-                component: Commande,
-                meta: {
-                    authRequired: true
-                }
+                component: Commande
             },
             {
                 path: "commandes/:id",
                 name: "Commandes",
                 component: Commande,
-                props:true,
-                meta: {
-                    authRequired: true
-                }
+                props:true
             },
             {
                 path: "contact",
