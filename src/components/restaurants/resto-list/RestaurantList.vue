@@ -24,6 +24,7 @@
     </v-layout>
   </v-container> -->
    <v-content grid-list-md text-xs-center fluid ma-0 pa-0 fill-height>
+       <SpinnerLoader v-bind:isLoading="isOpen" v-bind:message="message"></SpinnerLoader>
             <v-layout row wrap>
                 <v-flex xs5>
                     <v-text-field v-model="nom" label="Nom"></v-text-field>
