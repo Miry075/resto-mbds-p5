@@ -4,7 +4,8 @@
         <!-- <v-layout row>
                 <RestaurantMap></RestaurantMap>
         </v-layout> -->
-        <v-layout row>
+        <v-layout row style="margin-top: -56px;">
+                <SpinnerLoader v-bind:isLoading="isOpen" v-bind:message="message"></SpinnerLoader>
                 <RestaurantList></RestaurantList>
         </v-layout>
     </v-container>
