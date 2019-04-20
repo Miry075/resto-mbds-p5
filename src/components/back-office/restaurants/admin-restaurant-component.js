@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Component from 'vue-class-component';
 import { db } from "../../../Database";
+// import VueSingleSelect from "vue-single-select";
 import VueSingleSelect from "vue-single-select";
 import ListRestaurants from './list-restaurants/ListRestaurants.vue';
 import VueRouter from 'vue-router'
 Vue.use(VueRouter);
-Vue.component('vue-single-select', VueSingleSelect);
+// Vue.component('vue-single-select', VueSingleSelect);
 
 var restaurantsRef = db.ref("restaurant");
 var cuisinesRef = db.ref("cuisine");
@@ -13,7 +14,8 @@ var cuisinesRef = db.ref("cuisine");
 export default {
     props: ['resto'],
     components: {
-        ListRestaurants
+        ListRestaurants,
+        // VueSingleSelect
     },
     data() {
         return {

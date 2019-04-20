@@ -1,5 +1,6 @@
 <template>
   <v-container grid-list-md id="restaurant-form">
+    <SpinnerLoader v-bind:isLoading="isLoading" v-bind:message="message"></SpinnerLoader>
       <h1>Ajouter un restaurant</h1>
         <v-layout row wrap>
             <v-flex md4>
