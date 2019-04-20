@@ -62,11 +62,24 @@ export default {
             this.isLoading= true;
             this.orders.forEach(item => {
                 item.user = sessionStorage.get("username");
-                item.orderDqte = new Date();
+                item.orderDate = new Date();
                 this.commandeRef.push(item);
+                // this.commandeRef.push({
+                //     key: item.key,
+                //     orderDate: item.child('orderDate').val(),
+                //     key: item.key,
+                //     image: item.child('image').val(),
+                //     nom: item.child('nom').val(),
+                //     type: item.child('type').val(),
+                //     quantite: item.child('quantite').val(),
+                //     user: sessionStorage.get("username"),
+                //     prix: item.child('prix').val(),
+                //     prixTotal: item.child('prixTotal').val(),
+                //     user: sessionStorage.getItem("username"),
+                //     orderId: orderId
+                // });
+                this.isLoading= false;
             });
-            debugger
-            this.isLoading= false;
         },
         onCancel() {
             console.log('User cancelled the loader.')

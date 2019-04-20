@@ -86,6 +86,7 @@ export default {
     logout() {
       this.$auth.logout();
       sessionStorage.clear();
+      this.$router.push('/restaurants-list');
     }
   }
 };
@@ -93,7 +94,13 @@ export default {
 <style>
 #header-toolbar {
   padding: 0px 0px 0px !important;
+  /* color:thistle!important; */
 }
+
+.v-btn__content {
+    color:thistle!important;
+}
+
 
 .theme--light.v-toolbar {
   /* background-color: #f5f5f5; */

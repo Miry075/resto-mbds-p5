@@ -6,16 +6,19 @@
             <h1>Mes Commandes</h1>
             <v-data-table
                 :headers="mainHeaders"
-                :items="commandes"
+                :items="orders"
                 class="elevation-1"
             >
-                <template v-slot:items="props">
-                <!-- <td class="text-xs-right">{{ props.item.orderId }}</td> -->
-                <td class="text-xs-right">{{ props.item.orderDate }}</td>
-                <td class="text-xs-right">{{ props.item.prixTotal }}</td> 
-            <td class="text-xs-right"> 
-                <v-btn slot="activator" @click="goToForm(props.item)" flat color="rgba(0, 0, 0, 0.87)">
-                       Details
+            <template v-slot:items="props">
+                 <td class="text-xs-right"><v-img v-bind:src="`${props.item.image}`" aspect-ratio="2.75"></v-img></td>
+                <td class="text-xs-right">{{ props.item.name }}</td>
+                <td class="text-xs-right">{{ props.item.type }}</td> 
+                <td class="text-xs-right">{{ formatPrice(props.item.prix) }}</td> 
+                <td class="text-xs-right">{{ props.item.quantite }}</td> 
+                <td class="text-xs-right">{{ formatPrice(props.item.prixTotal) }}</td> 
+                <td class="text-xs-right"> 
+                    <v-btn slot="activator" @click="goToForm(props.item)" flat color="rgba(0, 0, 0, 0.87)">
+                         Details
                     </v-btn>
                 </td>
                 </template>

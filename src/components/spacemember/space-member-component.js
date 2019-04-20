@@ -15,26 +15,31 @@ var platTypeRef = db.ref("type");
 var commandeRef = db.ref("commandes");
 
 export default {
-    components:{
+    components: {
         SpinnerLoader
     },
     data() {
         return {
+            orders: [],
             commandes: [],
             objectOrders: {},
-            message:'Loading ...',
-            isLoading:false,
+            message: 'Loading ...',
+            isLoading: false,
             mainHeaders: [
-                { text: 'Date', value: 'orderDate' },
+                { text: 'Photo', value: 'image' },
+                { text: 'Nom du Plat', value: 'nom' },
+                { text: 'Type du plat', value: 'type' },
+                { text: 'Prix unitaire', value: 'prix' },
+                { text: 'Quantite', value: 'quantite' },
                 { text: 'Prix Total', value: 'prixTotal' },
-                { text: 'Details', value: '' }
+                { text: 'Détails', value: '' }
             ],
         }
     },
     methods: {
         formatPrice(value) {
             let val = (value / 1).toFixed(2).replace('.', ',')
-            return 'Rs '+ val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+            return 'Rs ' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
         },
     },
     computed: {
@@ -45,6 +50,19 @@ export default {
         this.isLoading = true;
         commandeRef.orderByChild("user").equalTo(username).once("value", Response => {
             Response.forEach(item => {
+                this.orders.push({
+                    key: item.key,
+                    orderDate: item.child('orderDate').val(),
+                    key: item.key,
+                    image: item.child('image').val(),
+                    name: item.child('name').val(),
+                    type: item.child('type').val(),
+                    quantite: item.child('quantite').val(),
+                    prix: item.child('prix').val(),
+                    prixTotal: item.child('prixTotal').val(),
+                    user: sessionStorage.getItem("username"),
+                    orderId: orderId
+                });
                 var orderId = item.child('orderId').val()
                 if (!this.objectOrders[orderId]) {
                     this.objectOrders[orderId] = [];
