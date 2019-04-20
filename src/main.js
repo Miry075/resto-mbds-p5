@@ -16,11 +16,7 @@ import Carousel3d from 'vue-carousel-3d';
 import store from './store'
 // import 'swiper/dist/css/swiper.css'
 
-Vue.use(Carousel3d)
-
-// import VueGlide from 'vue-glide-js'
-
-// Définition des routes
+Vue.use(Carousel3d);
 Vue.use(Vuetify);
 Vue.use(VueRouter);
 // Vue.use(VueGlide)

@@ -1,6 +1,7 @@
 <template>
    <v-container fluid grid-list-md>
         <h1>Carte et Menu</h1>
+        <SpinnerLoader v-bind:isLoading="isLoading" v-bind:message="message"></SpinnerLoader>
         <v-layout row wrap>
              <v-flex md4>
                 <!-- <h2>Nos restaurants</h2> -->

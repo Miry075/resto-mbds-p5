@@ -1,16 +1,24 @@
 import Vue from 'vue'
 import Component from 'vue-class-component';
 import VueRouter from 'vue-router';
-import { db, storage } from "../../../../Firebase";
+import { db, storage } from "../../../../Database";
+
+import SpinnerLoader from "../../../spinner-loader/SpinnerLoader.vue";
 
 Vue.use(VueRouter);
 var restaurantsRef = db.ref("restaurant");
 var cuisineRef = db.ref("cuisine");
 
 export default {
+    components:{
+        SpinnerLoader
+    },
     props: ['restaurant','cuisines'],
     data() {
         return {
+            isLoading: false,
+            fullPage: true,
+            message:'Saving ...',
             resto:{},
             title: "Image Upload",
             dialog: false,
@@ -31,6 +39,7 @@ export default {
             var this_s = this;
             //create if kay is undefined
             if(!this.restaurantToSave.key){
+                this.isLoading= true;
                 var path = "restau-buffa-images/" + this.imageName;
                 var storageRef = storage.ref(path);
                 var uploadTask = storageRef.put(this.imageFile);
@@ -41,12 +50,16 @@ export default {
                             nom: this_s.restaurantToSave.nom,
                             cuisine: this_s.restaurantToSave.cuisine ? this_s.restaurantToSave.cuisine.key : '',
                             image:res,
-                            description: this_s.restaurantToSave.description})
+                            description: this_s.restaurantToSave.description
+                        });
+                        this.isLoading= false;
                     });
                 });
             }
             else{ //update if already existing in the data base
+                this.isLoading= true;
                 var getByRef = restaurantsRef.child(this.restaurantToSave.key).update(this.restaurantToSave);
+                this.isLoading= false;
             }
         },
         onFilePicked (e) {
@@ -54,7 +67,7 @@ export default {
 			if(files[0] !== undefined) {
 				this.imageName = files[0].name
 				if(this.imageName.lastIndexOf('.') <= 0) {
-					return
+					return;
 				}
 				const fr = new FileReader ()
 				fr.readAsDataURL(files[0])

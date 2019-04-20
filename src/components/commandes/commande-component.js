@@ -7,6 +7,10 @@ import RestaurantSlider from '../restaurants/resto-slider/RestaurantSlider.vue';
 import LoginSubscribe from '../login-subscribe/LoginSubscribe.vue'
 import RestaurantAutocomplete from "../restaurants/resto-autocomplete/RestaurantAutocomplete.vue";
 import VueSingleSelect from "vue-single-select";
+
+import SpinnerLoader from "../spinner-loader/SpinnerLoader.vue";
+// Import stylesheet
+
 Vue.component('vue-single-select', VueSingleSelect);
 
 import { db } from "../../Database";
@@ -16,11 +20,15 @@ var restaurantsRef = db.ref("restaurant");
 var cuisineRef = db.ref("cuisine");
 var platRef = db.ref("plat");
 var platTypeRef = db.ref("type");
+var commandeRef = db.ref("commandes");
 
 // @Component({})
 export default {
     data() {
         return {
+            isLoading: true,
+            fullPage: true,
+            message:'Loading ...',
             _restaurant: {},
             restaurants: [],
             typePlats: [],
@@ -43,13 +51,22 @@ export default {
                 sortBy: 'name'
             },
             selected: [],
+            
         }
     },
     methods: {
+        saveCommande(){
+            this.commandeRef.push(...this.orders);
+        },
+        onCancel() {
+            console.log('User cancelled the loader.')
+          },
         openDialog() {
             this.open = true;
         },
         findPlatsByResto(restaurant) {
+            var this_s = this;
+            this.isLoading = true;
             platRef.orderByChild("restaurant").equalTo(restaurant.key).once("value", response => {
                 response.forEach(plat => {
                     var current = {
@@ -70,6 +87,7 @@ export default {
                         this.desserts.push(current);
                     }
                 });
+                this.isLoading = false;
             });
         }
     },
@@ -78,7 +96,8 @@ export default {
         ListOrder,
         RestaurantSlider,
         LoginSubscribe,
-        RestaurantAutocomplete
+        RestaurantAutocomplete,
+        SpinnerLoader
     },
 
     mounted() {
@@ -120,10 +139,13 @@ export default {
                 return this._restaurant;
             },
             set: function (newVal) {
+                // this.isLoading = true;
                 this._restaurant = newVal;
+                console.log("selectedRestaurant ::: ",newVal);
                 if(newVal){
                     this.findPlatsByResto(newVal);
                 }
+                // this.isLoading = false;
             }
         }
     }
