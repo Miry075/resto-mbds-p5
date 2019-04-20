@@ -5,12 +5,15 @@ import User from './components/User.vue'
 import routes from './routes/routes';
 // import VueGlide from 'vue-glide-js'
 // import 'vue-glide-js/dist/vue-glide.css'
+import FirebaseAuthPlugin from './FirebaseAuthPlugin'
+Vue.use(FirebaseAuthPlugin)
 
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 
 import Carousel3d from 'vue-carousel-3d';
 
+import store from './store'
 // import 'swiper/dist/css/swiper.css'
 
 Vue.use(Carousel3d)
@@ -33,8 +36,22 @@ Vue.use(VueRouter);
 // ]
 
 const router = new VueRouter({
-    routes,
-    mode: 'history'
+  routes,
+  mode: 'history'
+})
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.authRequired)) {
+    if (!store.state.user) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 // La ligne ci-dessous rend le composant User utilisable
@@ -49,7 +66,8 @@ Vue.component("app-user", User);
 // })
 
 new Vue({
-    el: "#app",
-    render: h => h(App),
-    router,
+  el: "#app",
+  render: h => h(App),
+  router,
+  store
 });

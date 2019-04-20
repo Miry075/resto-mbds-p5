@@ -7,7 +7,8 @@ import RestaurantSlider from '../restaurants/resto-slider/RestaurantSlider.vue';
 import LoginSubscribe from '../login-subscribe/LoginSubscribe.vue'
 import RestaurantAutocomplete from "../restaurants/resto-autocomplete/RestaurantAutocomplete.vue";
 
-import { db } from "../../Firebase";
+import { db } from "../../Database";
+require('firebase/auth');
 
 var restaurantsRef = db.ref("restaurant");
 var platRef = db.ref("plat");
@@ -49,6 +50,9 @@ export default {
     },
 
     mounted() {
+        // if (dbauth.auth().currentUser === undefined || dbauth.auth().currentUser === null) {
+        //     this.$router.push({ path: `/login` });
+        // }
         restaurantsRef.once("value", Response => {
             Response.forEach(item => {
                 cuisineRef
@@ -59,12 +63,16 @@ export default {
                             id: item.key,
                             nom: item.child("nom").val(),
                             cuisine: snapshot.child("nom").val(),
-                            photo: item.child("photo").val()
+                            photo: item.child("photo").val(),
+                            description: item.child("description").val()
                         });
                     });
             });
+            console.log('this.restaurants:::' + this.restaurants.length);
+
             if (this.restaurants.length != 0) {
                 let restoParam = (this.resto != undefined) ? this.resto : this.restaurants[0].id;
+                console.log('restoParam:::' + restoParam);
                 restaurantsRef
                     .orderByKey()
                     .equalTo(restoParam)
@@ -72,8 +80,7 @@ export default {
                         this.restaurant.id = snapshot.key;
                         this.restaurant.nom = snapshot.child("nom").val();
                         this.restaurant.photo = snapshot.child("photo").val();
-                        this.restaurant.description =
-                            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages.";
+                        this.restaurant.description = snapshot.child("description").val();
                     });
 
                 platRef.orderByChild("restaurant")
@@ -109,6 +116,13 @@ export default {
         });
 
 
+    },
+    watch: {
+        user(auth) {
+            if (!!auth) {
+                this.$router.replace(this.nextRoute)
+            }
+        }
     },
     computed: {
         // restaurants: {

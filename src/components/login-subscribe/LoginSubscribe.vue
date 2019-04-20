@@ -3,7 +3,7 @@
         <v-layout row wrap justify-center>
             <v-card>
                 <v-card-title>
-                    <span class="headline">User Profile</span>
+                    <span class="headline">Authenfication</span>
                 </v-card-title>
                 <v-card-text>
                     <v-layout row wrap>

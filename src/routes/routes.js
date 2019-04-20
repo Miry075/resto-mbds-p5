@@ -3,6 +3,8 @@ import Restaurant from '../components/restaurants/Restaurant.vue'
 import Commande from '../components/commandes/Commande.vue'
 import Contact from '../components/contact/Contact.vue'
 import Restaurants from '../components/restaurants/Restaurant.vue'
+import Login from '../components/login-subscribe/login/login.vue'
+import Subscribe from '../components/login-subscribe/subscribe/subscribe.vue'
 
 const routes = [
     {
@@ -23,8 +25,11 @@ const routes = [
             },
             {
                 path: "commandes",
-                name: "Commande",
-                component: Commande
+                name: "Commandes",
+                component: Commande,
+                meta: {
+                    authRequired: true
+                }
             },
             {
                 path: "contact",
@@ -36,6 +41,16 @@ const routes = [
                 name: "Restaurants",
                 component: Restaurants
             },
+            {
+                path: "login",
+                name: "Login",
+                component: Login
+            },
+            {
+                path: "subscribe",
+                name: "Subscribe",
+                component: Subscribe
+            }
         ]
     }
 ];

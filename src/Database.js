@@ -1,3 +1,5 @@
+// export const db = !firebase.apps.length ? firebase.initializeApp(config).database() : firebase.app().database();
+
 import Firebase from "firebase";
 // FIREBASE INIT
 var config = {
