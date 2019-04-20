@@ -29,15 +29,24 @@ const routes = [
                 }
             },
             {
+                path: "commandes/:id",
+                name: "Commandes",
+                component: Commande,
+                props:true,
+                meta: {
+                    authRequired: true
+                }
+            },
+            {
                 path: "contact",
                 name: "Contact",
                 component: Contact
             },
-            // {
-            //     path: "restaurants-list",
-            //     name: "Restaurants",
-            //     component: Restaurants
-            // },
+            {
+                path: "restaurants-list",
+                name: "Restaurants",
+                component: Restaurants
+            },
             {
                 path: "admin/restaurants",
                 name: "Admin Restaurants",
