@@ -16,7 +16,7 @@
                 >
                     <template slot="option" slot-scope="{option, idx}">
                         <div>
-                            <span><p>Restaurant: <b>{{option.nom}}</b> cuisine: {{option.cuisine.nom}}</p></span>
+                            <span><p>Restaurant: <b>{{option.nom}}</b> cuisine: {{option.cuisine}}</p></span>
                         </div>
                     </template>
                 </vue-single-select>

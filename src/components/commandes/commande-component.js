@@ -24,11 +24,12 @@ var commandeRef = db.ref("commandes");
 
 // @Component({})
 export default {
+    props: ["id"],
     data() {
         return {
             isLoading: true,
             fullPage: true,
-            message:'Loading ...',
+            message: 'Loading ...',
             _restaurant: {},
             restaurants: [],
             typePlats: [],
@@ -51,16 +52,16 @@ export default {
                 sortBy: 'name'
             },
             selected: [],
-            
+
         }
     },
     methods: {
-        saveCommande(){
+        saveCommande() {
             this.commandeRef.push(...this.orders);
         },
         onCancel() {
             console.log('User cancelled the loader.')
-          },
+        },
         openDialog() {
             this.open = true;
         },
@@ -68,6 +69,9 @@ export default {
             var this_s = this;
             this.isLoading = true;
             platRef.orderByChild("restaurant").equalTo(restaurant.key).once("value", response => {
+                this.plats = [];
+                this.horsdoeuvre = [];
+                this.desserts = [];
                 response.forEach(plat => {
                     var current = {
                         key: plat.key,
@@ -104,18 +108,39 @@ export default {
         var this_s = this;
         var fistRestaurant = null;
         var index = 0;
+
+        if (this.id != null) {
+            console.log("this.id=" + this.id);
+            restaurantsRef
+                .orderByKey()
+                .equalTo(this.id)
+                .on("child_added", item => {
+                    cuisineRef.orderByKey()
+                        .equalTo(item.child("cuisine").val())
+                        .on("child_added", snapshot => {
+                            let restaurant = {};
+                            restaurant.key = item.key;
+                            restaurant.nom = item.child("nom").val();
+                            restaurant.cuisine = snapshot.child("nom").val();
+                            restaurant.photo = item.child("photo").val();
+                            restaurant.description = item.child("description").val();
+                            this_s.selectedRestaurant = restaurant;
+                            this_s.findPlatsByResto(restaurant);
+                        });
+                });
+        }
         restaurantsRef.once("value", Response => {
             Response.forEach(item => {
-                if (index == 0) {
+                if (index == 0 && this._restaurant == undefined) {
                     this_s.selectedRestaurant = this_s.restaurants[0];
                     this_s.findPlatsByResto(item);
                 }
-                
+
                 cuisineRef.orderByKey()
                     .equalTo(item.child("cuisine").val())
                     .on("child_added", snapshot => {
                         this.restaurants.push({
-                            id: item.key,
+                            key: item.key,
                             nom: item.child("nom").val(),
                             cuisine: snapshot.child("nom").val(),
                             photo: item.child("photo").val(),
@@ -123,7 +148,7 @@ export default {
                         });
                     });
             })
-                index++;
+            index++;
         });
     },
     watch: {
@@ -141,11 +166,14 @@ export default {
             set: function (newVal) {
                 // this.isLoading = true;
                 this._restaurant = newVal;
-                console.log("selectedRestaurant ::: ",newVal);
-                if(newVal){
-                    this.findPlatsByResto(newVal);
+                console.log("selectedRestaurant ::: ", newVal);
+                if (newVal) {
+                    if (newVal) {
+                        console.log("Current resto" + newVal.nom + " = " + newVal.key);
+                        this.findPlatsByResto(newVal);
+                    }
+                    // this.isLoading = false;
                 }
-                // this.isLoading = false;
             }
         }
     }

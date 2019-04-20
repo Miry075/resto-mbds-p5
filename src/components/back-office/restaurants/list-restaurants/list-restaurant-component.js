@@ -4,6 +4,7 @@ import { db } from "../../../../Database";
 
 import SpinnerLoader from "../../../spinner-loader/SpinnerLoader.vue";
 // import VueSingleSelect from "vue-single-select";
+import VueSingleSelect from "vue-single-select";
 import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 // Vue.component('vue-single-select', VueSingleSelect);
