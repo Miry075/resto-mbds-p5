@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component';
 import VueRouter from 'vue-router';
-import { db, storage } from "../../../../Firebase";
+import { db, storage } from "../../../../Database";
 
 Vue.use(VueRouter);
 var restaurantsRef = db.ref("restaurant");

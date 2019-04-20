@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Component from 'vue-class-component';
-import { db } from "../../../../Firebase";
+import { db } from "../../../../Database";
 import VueSingleSelect from "vue-single-select";
 import VueRouter from 'vue-router'
 Vue.use(VueRouter);
