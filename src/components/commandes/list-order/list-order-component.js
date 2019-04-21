@@ -37,6 +37,7 @@ export default {
                     orderDate: date,
                     orderId: this.SHA256(date.getTime().toString())
                 })
+                this.$router.push('/my-orders');
             });
         },
         formatPrice(value) {
