@@ -11,7 +11,8 @@
             height="55"
             width="55"
             max-width="55"
-            @click="$vuetify.goTo(0)"
+            @click="goToRestaurant()"
+            style="cursor:pointer"
           />
           <v-btn
             v-for="(link, i) in links"
@@ -78,6 +79,9 @@ export default {
     LoginSubscribe
   },
   methods: {
+    goToRestaurant(){
+        this.$router.push('/restaurants-list');
+    },
     goToAdmin(){
         this.$router.push('admin/restaurants');
     },
