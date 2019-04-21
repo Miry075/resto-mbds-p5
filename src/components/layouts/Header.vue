@@ -24,6 +24,7 @@
           <v-btn flat v-show="!user" @click="openDialog()">Log in</v-btn>
           <v-btn flat v-show="!user" @click="openDialog()">S'inscrire</v-btn>
           <v-btn flat v-show="user" @click="myOrders()">Mes Commandes</v-btn>
+          <v-btn flat v-show="user" @click="goToAdmin()">Administration</v-btn>
           <v-btn flat v-show="user" @click="logout()">Deconnexion</v-btn>
         </v-layout>
       </v-container>
@@ -60,10 +61,11 @@ export default {
         route: "/commandes/id"
       },
       {
-        icon: "home",
+        icon: "contact",
         text: "Nous Contacter",
         route: "/contact"
       }
+      
     ]
   }),
   computed: {
@@ -76,9 +78,11 @@ export default {
     LoginSubscribe
   },
   methods: {
+    goToAdmin(){
+        this.$router.push('admin/restaurants');
+    },
     myOrders(){
         this.$router.push('/my-orders');
-        
     },
     openDialog() {
       this.dialog = true;

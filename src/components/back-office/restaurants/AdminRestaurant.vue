@@ -1,6 +1,7 @@
 <template>
     <v-container grid-list-md id="restaurant-form">
         <h1>Restaurants</h1>
+        <p>Cette page ne devra accessible que pour les administrateurs, mais on a pu établir les permissions</p>
         <v-layout row wrap>
             <v-flex md4>
                 <v-btn flat @click="goToForm()" color="orange"> <v-icon>add</v-icon> Nouveau Restaurant</v-btn>
